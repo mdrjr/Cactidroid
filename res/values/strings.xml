@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Monitoramento!</string>
+    <string name="app_name">Monitoramento, Central</string>
+    <string name="Permission"></string>
+    <string name="txtcolor_white">#000000</string>
+</resources>

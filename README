@@ -1,0 +1,106 @@
+Android Monitor aka. Cactidroid
+
+Q: What is Cacti Droid?
+A: Simple, a tool that gets Cacti exported graphs and shows on your Android device.
+
+Q: Why did you made that?
+A: Learning Java and Java for android and all the fun.
+
+Q: Why CACTI?
+A: Cacti is simple and yet powerful. You can make nasty things on it.
+Back when I got this job that I am. They didn't had any monitoring tool for they servers/network.
+My schedule was quite busy that time all I could do fast to have something to show my boss was a Simple Cacti.
+Now your cacti does monitor even or Microsoft SQL Servers and PostGres.
+
+
+
+How to use:
+
+First get the code, avaliable for free at http://github.com/mdrjr/Cactidroid.git
+
+You must have at least an idea on how to use Eclipse.
+If you dont, get eclipse at: http://www.eclipse.org/
+You also must have Android SDK: http://developer.android.com/sdk/index.html
+
+Import the project inside your eclipse and change the variables to your enviroment.
+
+Also you need a XML that have all the graphs/options/hosts.
+
+the XML Format is very simple, here's and Example on what it is.
+Key: servers -> servers separated by comma.
+Key: servername-res -> your servers monitored resourses. eg. CPU, CPU 1, Network1, Database Transactions.
+Key: servername-resname -> name of the image, eg. graph_100_1 (you don't have to put the .png at the end.
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Cactidroid Config XML</comment>
+<entry key="servers">Server1,Server2</entry>
+<entry key="Server1-res">CPU 0, CPU 1,Disk Usage /Database</entry>
+<entry key="Server2-res">CPU,Network Usage,Disk Space,Memory</entry>
+<entry key="Server1-CPU 0">graph_000_1</entry>
+<entry key="Server1-CPU 1">graph_002_1</entry>
+<entry key="Server1-Disk Usage /Database">graph_781_1</entry>
+</properties>
+
+As you may noticed this is a Java Properties. You can create it at your own using Java.
+Here's the sample.
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Properties;
+
+
+public class MAIN {
+	
+	public static void main(String[] args) throws IOException {
+		Properties prop = new Properties();
+		// All Servers
+		prop.put("servers", "Server1,Server2");
+		
+		// Server 1
+		prop.put("Server1-res", "CPU 0,CPU 1,Disk Usage /Database");
+		prop.put("Server1-CPU 0", "graph_000_1");
+		prop.put("Server1-CPU 1", "graph_002_1");
+		prop.put("Server1-Disk Usage /Database", "graph_781_1");
+		
+		// Server 2
+		prop.put("Server2-res", "CPU,Network Usage,Disk Space, Memory");
+		
+		// Out Stream
+		OutputStream out = new FileOutputStream(new File("Path.To.Save.Your.xml"));
+		
+		
+		prop.storeToXML(out, "Cactidroid Config XML");
+	}
+}
+
+This class above will create the same XML.
+
+All other stuff you should be capable of doing. Shouldn't be hard for you. If an imbecil like me can do it. 
+
+
+
+
+
+History Brief:
+v0.1 ultra alpha with plenty of crashs:
+	First version, ugly as hell, no-one saw, thank god.
+	Used jcifs to get those graphs from a network share.
+	Kinda slow, even on the internal network.
+	Hardcoded all servers/resources/graphs
+	
+v0.5 i'm getting better at it.
+	Second version, replaced the jcifs lib to use the internal http connection, sice those graphs are already at a webserver (DUHHH).
+	Alot faster.
+	Added a timer to auto-update the graph
+	Still Hardcoded stuff
+	
+v1.0 this release
+	XML config file.
+	Cleaner code
+	
+	
